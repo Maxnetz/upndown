@@ -15,7 +15,7 @@ const ActivityCard = () => {
     <div className="flex overflow-auto pt-24">
         {data.map((user) => 
             <div className="card min-w-[14rem] bg-base-100 shadow-xl m-8" key={user.id}>
-                <figure className="">
+                <figure>
                     <img src={runningPic} alt="Shoes" className="rounded-xl" />
                 </figure>
                 <div className="card-body items-center text-center">

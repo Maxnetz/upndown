@@ -7,7 +7,7 @@ const Dashboard = () => {
         <div className="bg-purple-200">
             <NavBar />
             <ActivityCard />
-            <div className="flex justify-around h-1/2">
+            <div className="flex justify-around">
                 <StatContainer />
                 <StatContainer />
                 <StatContainer />
