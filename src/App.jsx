@@ -1,12 +1,15 @@
 import NavBar from "./components/NavBar/NavBar";
-import ActivityCard from "./components/ActivityCard/ActivityCard";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
-    <div className="">
-      <NavBar />
-      <ActivityCard />
+    <div className="App">
+      
+        {/* <NavBar /> */}
+        <Dashboard />
+        
     </div>
+   
   );
 }
 

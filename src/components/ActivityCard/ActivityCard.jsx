@@ -8,12 +8,13 @@ const ActivityCard = () => {
         { id: 3, activity: "Hiking" },
         { id: 4, activity: "Dancing" },
         { id: 5, activity: "Biking" },
+        { id: 5, activity: "Biking" },
       ];
 
     return(
-    <div className="flex overflow-auto">
+    <div className="flex overflow-auto pt-24">
         {data.map((user) => 
-            <div className="card min-w-[14rem] max-w-full bg-base-100 shadow-md m-4" key={user.id}>
+            <div className="card min-w-[14rem] bg-base-100 shadow-xl m-8" key={user.id}>
                 <figure className="">
                     <img src={runningPic} alt="Shoes" className="rounded-xl" />
                 </figure>
