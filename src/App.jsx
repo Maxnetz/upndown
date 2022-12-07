@@ -1,8 +1,8 @@
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard"
 
 function App() {
   return (
-    <div className="">
+    <div className="App">
       <Dashboard />
     </div>
   );
