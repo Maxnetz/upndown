@@ -4,15 +4,18 @@ import NavBar from "../components/NavBar/NavBar"
 
 const Dashboard = () => {
     return (
-        <div className="bg-purple-200">
+        <div className=" " >
             <NavBar />
-            <ActivityCard />
-            <div className="flex justify-around">
-                <StatContainer />
-                <StatContainer />
-                <StatContainer />
+            <div className="h-screen">
+                <ActivityCard />
+                <div className="flex justify-around">
+                    <StatContainer />
+                    <StatContainer />
+                    <StatContainer />
+                </div>
             </div>
         </div>
+        
     )
 }
 export default Dashboard;
