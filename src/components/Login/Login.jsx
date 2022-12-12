@@ -14,7 +14,7 @@ const Login = () => {
 
           <div>
             <div>
-              <label for="username" className="block text-sm font-medium text-gray-700 text-start py-4">Username</label>
+              <label className="block text-sm font-medium text-gray-700 text-start py-4">Username</label>
               <div>
                 <input type="text" placeholder="Username" className="w-full border bg-white border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 py-4" />
               </div>

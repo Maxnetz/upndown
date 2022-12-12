@@ -57,21 +57,21 @@ const Register = () => {
             <div className='flex'>
               <div className='form-check'>
                 <input type="radio" className='form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer' />
-                <label class="form-check-label inline-block text-gray-800 px-2" for="flexRadioDefault1">
+                <label className="form-check-label inline-block text-gray-800 px-2">
                   Male
                 </label>
               </div>
 
               <div className='form-check'>
                 <input type="radio" className='form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer' />
-                <label class="form-check-label inline-block text-gray-800 px-2" for="flexRadioDefault1">
+                <label className="form-check-label inline-block text-gray-800 px-2">
                   Female
                 </label>
               </div>
 
               <div className='form-check'>
                 <input type="radio" className='form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer' />
-                <label class="form-check-label inline-block text-gray-800 px-2" for="flexRadioDefault1">
+                <label className="form-check-label inline-block text-gray-800 px-2">
                   Others
                 </label>
               </div>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Modal from 'react-modal';
 import logo from './pictures/logo.png'
 const ActivityForm = ({ onAdd }) => {
     const [activityName, setActivityName] = useState('')
@@ -31,14 +32,14 @@ const ActivityForm = ({ onAdd }) => {
     }
 
     return (
-        <div>
+        <div className="bg-white">
         
             <label htmlFor="my-modal" className="btn focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400">Add Activity</label>
             <input type="checkbox" id="my-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box  bg-white">
 
-                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className=" mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                         <form onSubmit={validateForm} className="mb-0 space-y-6">
 
@@ -60,7 +61,7 @@ const ActivityForm = ({ onAdd }) => {
                                 <label className="block text-sm font-medium text-gray-700 text-start">Type</label>
 
                                 <div className="mt-1">
-                                    <select name="activityType" value={activityType} onChange={(e) => setActivityType(e.target.value)} className="select select-bordered w-full border bg-white border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500" >
+                                    <select name="activityType"  onChange={(e) => setActivityType(e.target.value)} className="select select-bordered w-full border bg-white border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500" >
                                         <option disabled selected>Please select activity type</option>
                                         <option>Run</option>
                                         <option>Ride</option>
