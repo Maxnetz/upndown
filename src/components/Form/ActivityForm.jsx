@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Modal from 'react-modal';
 import logo from './pictures/logo.png'
 const ActivityForm = ({ onAdd }) => {
     const [activityName, setActivityName] = useState('')
