@@ -1,10 +1,12 @@
 import StatContainer from "../components/StatContainer/StatContainer";
 import ActivityCard from "../components/ActivityCard/ActivityCard";
-import NavBar from "../components/NavBar/NavBar"
+import NavBar from "../components/NavBar/NavBar";
+
+
 
 const Dashboard = () => {
     return (
-        <div className=" " >
+        <div>
             <NavBar />
             <div className="h-screen">
                 <ActivityCard />
@@ -15,7 +17,6 @@ const Dashboard = () => {
                 </div>
             </div>
         </div>
-        
-    )
-}
+    );
+};
 export default Dashboard;
