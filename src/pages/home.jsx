@@ -1,7 +1,7 @@
 import React from 'react'
-import LandingPage from '../components/Landing/LandingPage'
+import LandingPage from '../components/LandingPage/Landing'
 
-const home = () => {
+const Home = () => {
   return (
     <div className="bg-white">
       <LandingPage />
@@ -9,4 +9,4 @@ const home = () => {
   )
 }
 
-export default home
+export default Home;

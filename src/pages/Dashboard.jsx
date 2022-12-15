@@ -1,18 +1,18 @@
 import StatContainer from "../components/StatContainer/StatContainer";
 import ActivityCard from "../components/ActivityCard/ActivityCard";
-import NavBar from "../components/NavBar/NavBar";
+import ActivityForm from "../components/Form/ActivityForm";
 
 
 const Dashboard = () => {
     return (
         <div>
-            <NavBar />
             <div className="h-screen">
                 <ActivityCard />
                 <div className="flex justify-around">
                     <StatContainer />
                     <StatContainer />
                     <StatContainer />
+                    <ActivityForm />
                 </div>
             </div>
         </div>
