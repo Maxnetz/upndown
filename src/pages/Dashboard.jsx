@@ -1,13 +1,21 @@
-import React from 'react'
-import ActivityCard from '../components/ActivityCard/ActivityCard'
-import ActivityForm from '../components/Form/ActivityForm'
-const Dashboard = () => {
-  return (
-    <div>
-        <ActivityForm/>
-        <ActivityCard />
-    </div>
-  )
-}
+import StatContainer from "../components/StatContainer/StatContainer";
+import ActivityCard from "../components/ActivityCard/ActivityCard";
+import NavBar from "../components/NavBar/NavBar";
 
-export default Dashboard
+
+const Dashboard = () => {
+    return (
+        <div>
+            <NavBar />
+            <div className="h-screen">
+                <ActivityCard />
+                <div className="flex justify-around">
+                    <StatContainer />
+                    <StatContainer />
+                    <StatContainer />
+                </div>
+            </div>
+        </div>
+    );
+};
+export default Dashboard;
