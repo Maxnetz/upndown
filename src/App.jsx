@@ -1,10 +1,13 @@
-import Dashboard from "./pages/Dashboard"
+import './App.css';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
   return (
-    <div className="App">
-      <Dashboard />
+    <div>
+      <NavBar />
     </div>
+    
   );
 }
+
 export default App;

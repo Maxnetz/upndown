@@ -3,7 +3,6 @@ import ActivityCard from "../components/ActivityCard/ActivityCard";
 import NavBar from "../components/NavBar/NavBar";
 
 
-
 const Dashboard = () => {
     return (
         <div>
