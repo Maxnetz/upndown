@@ -8,7 +8,7 @@ const ActivityCard = () => {
         { id: 3, activity: "Hiking" },
         { id: 4, activity: "Dancing" },
         { id: 5, activity: "Biking" },
-        { id: 5, activity: "Biking" },
+        { id: 6, activity: "Biking" },
       ];
 
     return(

@@ -1,28 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAppContext } from "../../context/appContext.js";
 
+// assets
 import logo from "./pictures/logo.png";
+import Alert from "../Alert/Alert.jsx";
 
 const Login = () => {
-
     // States
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [value, setValue] = useState({
+        userName: "",
+        password: "",
+    });
+    const { isLoading, showAlert, displayAlert, loginUser } = useAppContext();
     const [error, setError] = useState(null);
+
+    // useEffect(() => {
+    //     const loggedInUser = localStorage.getItem("user");
+    //     if (loggedInUser) {
+    //         const foundUser = JSON.parse(loggedInUser);
+    //         setValue(foundUser);
+    //     }
+    // }, []);
+
+    const handleChange = (e) => {
+        setValue({
+            ...value,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (username.trim() === "" || password.trim() === "") {
+        const { userName, password } = value;
+        const currentUser = { userName, password };
+
+        if (userName.trim() === "" || password.trim() === "") {
+            displayAlert();
             setError("Username and password are required");
             return;
+        } else {
+            loginUser(currentUser);
+            // console.log(currentUser);
         }
 
-        // reset 
-        setUsername("");
-        setPassword("");
-        setError(null);
+        // reset state
+        setValue({
+            userName: "",
+            password: "",
+        });
     };
-
 
     return (
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -39,7 +66,7 @@ const Login = () => {
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                         Sign In
                     </h2>
-
+                    {showAlert && <Alert />}
                     <div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 text-start py-4">
@@ -48,11 +75,11 @@ const Login = () => {
                             <div>
                                 <input
                                     type="text"
+                                    id="userName"
+                                    name="userName"
                                     placeholder="Username"
-                                    value={username}
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
+                                    value={value.userName}
+                                    onChange={handleChange}
                                     className="w-full border bg-white border-gray-300 px-3 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 py-4"
                                 />
                             </div>
@@ -65,11 +92,11 @@ const Login = () => {
                             <div>
                                 <input
                                     type="password"
+                                    id="password"
+                                    name="password"
                                     placeholder="Password"
-                                    value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
+                                    value={value.password}
+                                    onChange={handleChange}
                                     className="w-full border bg-white border-gray-300 px-3 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 py-4"
                                 />
                             </div>
