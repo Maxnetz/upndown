@@ -11,7 +11,7 @@ const LandingPage = () => {
                     <p className='py-4 mx-w-lg text-black'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis aliquam eius, mollitia facilis nam asperiores consectetur sit, autem eveniet veniam, laborum adipisci dicta. Minus iusto optio inventore. Sit, reiciendis inventore.</p>
                     
                 <div>
-                <a href="#my-modal-2" className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 mr-4">Sign in </a>
+                <a href="login" className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 mr-4">Sign in </a>
                     <div className="modal" id="my-modal-2">
                       <div className="modal-box bg-white ">
                        <Login />
@@ -21,7 +21,7 @@ const LandingPage = () => {
                       </div>
                     </div>
 
-                    <a href="#my-modal-3" className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400">Register </a>
+                    <a href="register" className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400">Register </a>
                     <div className="modal" id="my-modal-3">
                       <div className="modal-box bg-white">
                        <Register />

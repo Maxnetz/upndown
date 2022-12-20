@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useState } from "react";
+import React, { useReducer, useContext, useState, useEffect } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
@@ -11,7 +11,18 @@ import {
     LOGIN_USER_BEGIN,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_ERROR,
+    UPDATE_USER_BEGIN,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR,
     LOGOUT_USER,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREATE_ACTIVITY_BEGIN,
+    CREATE_ACTIVITY_SUCCESS,
+    CREATE_ACTIVITY_ERROR,
+    GET_ACTIVITIES_BEGIN,
+    GET_ACTIVITIES_SUCCESS,
+    SET_EDIT_ACTIVITY,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -23,15 +34,58 @@ const initialState = {
     showAlert: false,
     alertText: "",
     alertType: "",
+    user: null,
     userName: userName ? JSON.parse(userName) : null,
-    // userName: JSON.parse(userName),
     token: token,
+    isEditing: false,
+    editActivityId: "",
+    activityName: "",
+    activityType: "",
+    activityTypeOption: [
+        "",
+        "Walking",
+        "Running",
+        "Swimming",
+        "Riding",
+        "Hiking",
+    ],
+    startDate: Date.now(),
+    endDate: Date.now(),
+    duration: "",
+    description: "",
+    activities: [],
+    totalActivities: 0,
+    numOfPage: 1,
+    page: 1,
 };
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    // axios
+    axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
+    const authFetch = axios.create({
+        baseURL: "/api/v1",
+        headers: {
+            Authorization: `Bearer ${state.token}`,
+        },
+    });
+
+    // request
+    authFetch.interceptors.response.use(
+        (response) => {
+            return response;
+        },
+        (error) => {
+            console.log(error.response);
+            if (error.response.status === 401) {
+                console.log("AUTH ERROR");
+            }
+            return Promise.rereject(error);
+        }
+    );
 
     const displayAlert = () => {
         dispatch({ type: DISPLAY_ALERT });
@@ -58,14 +112,15 @@ const AppProvider = ({ children }) => {
     const registerUser = async (currentUser) => {
         dispatch({ type: REGISTER_USER_BEGIN });
         try {
-            const response = await axios.post(
+            const { data } = await axios.post(
                 "/api/v1/auth/register",
                 currentUser
             );
-            const { userName, token } = response.data;
+            const { user, token } = data;
+            const { userName, name, email } = user;
             dispatch({
                 type: REGISTER_USER_SUCCESS,
-                payload: { userName, token },
+                payload: { userName, name, email, token },
             });
             // Local Storage
             addUserToLocalStorage({ userName, token });
@@ -87,10 +142,10 @@ const AppProvider = ({ children }) => {
                 currentUser
             );
             const { user, token } = data;
-            const { userName } = user;
+            const { userName, name, email } = user;
             dispatch({
                 type: LOGIN_USER_SUCCESS,
-                payload: { userName, token },
+                payload: { userName, name, email, token },
             });
             // Local Storage
             addUserToLocalStorage({ userName, token });
@@ -103,15 +158,133 @@ const AppProvider = ({ children }) => {
         clearAlert();
     };
 
+    const updateUser = async (currentUser) => {
+        dispatch({ type: UPDATE_USER_BEGIN });
+        try {
+            const { data } = await axios.patch(
+                "/api/v1/auth/updateUser",
+                currentUser,
+                {
+                    headers: {
+                        Authorization: `Bearer ${state.token}`,
+                    },
+                }
+            );
+            // console.log(data);
+            const { user, token } = data;
+            const { userName, name, email } = user;
+            dispatch({
+                type: UPDATE_USER_SUCCESS,
+                payload: { userName, name, email, token },
+            });
+            addUserToLocalStorage({ userName, token });
+        } catch (error) {
+            // console.log(error.response);
+            dispatch({
+                type: UPDATE_USER_ERROR,
+                payload: { msg: error.response.data.msg },
+            });
+        }
+        clearAlert();
+    };
+
     // 101 - Add logout
-    const logoutUser = () => {
-        dispatch({type: LOGOUT_USER})
-        removeUserFromLocalStorage()
+    const logoutUser = async () => {
+        await authFetch.get("/auth/logout");
+        dispatch({ type: LOGOUT_USER });
+        removeUserFromLocalStorage();
+    };
+
+    const handleChange = ({ name, value }) => {
+        dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+    };
+
+    const clearValues = () => {
+        dispatch({ type: CLEAR_VALUES });
+    };
+
+    const createActivity = async () => {
+        dispatch({ type: CREATE_ACTIVITY_BEGIN });
+        try {
+            const {
+                activityName,
+                activityType,
+                startDate,
+                endDate,
+                duration,
+                description,
+            } = state;
+
+            await authFetch.post("/activities", {
+                activityName,
+                activityType,
+                startDate,
+                endDate,
+                duration,
+                description,
+            });
+
+            dispatch({ type: CREATE_ACTIVITY_SUCCESS });
+            dispatch({ type: CLEAR_VALUES });
+        } catch (error) {
+            if (error.response.status === 401) return;
+            dispatch({
+                type: CREATE_ACTIVITY_ERROR,
+                payload: { msg: error.response.data.msg },
+            });
+        }
+        clearAlert();
+    };
+
+    const getActivities = async () => {
+        let url = "/activities";
+        dispatch({ type: GET_ACTIVITIES_BEGIN });
+        try {
+            const { data } = await authFetch(url);
+            const { activities, totalActivities, numOfPage } = data;
+            dispatch({
+                type: GET_ACTIVITIES_SUCCESS,
+                payload: { activities, totalActivities, numOfPage },
+            });
+        } catch (error) {
+            console.log(error.response);
+        }
+        clearAlert();
+    };
+
+    useEffect(() => {
+        getActivities();
+    }, []);
+
+    const setEditActivity = (id) => {
+        dispatch({ type: SET_EDIT_ACTIVITY, payload: { id } });
+    };
+
+    const editActivity = () => {
+        console.log('edit activity');
+    }
+    
+    const deleteActivity = (id) => {
+        console.log(`delete: ${id}`)
     }
 
     return (
         <AppContext.Provider
-            value={{ ...state, displayAlert, registerUser, loginUser, logoutUser }}
+            value={{
+                ...state,
+                displayAlert,
+                registerUser,
+                loginUser,
+                updateUser,
+                logoutUser,
+                handleChange,
+                clearValues,
+                createActivity,
+                getActivities,
+                setEditActivity,
+                editActivity,
+                deleteActivity,
+            }}
         >
             {children}
         </AppContext.Provider>

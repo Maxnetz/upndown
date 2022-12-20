@@ -103,13 +103,14 @@ const Register = () => {
             gender: "",
         });
     };
+    
     useEffect(() => {
         if (userName) {
-            setTimeout(() => {
-                navigate("/");
-            }, 3000);
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 3000);
         }
-    }, [userName, navigate]);
+      }, [userName, navigate]);
 
     return (
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

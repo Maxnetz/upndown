@@ -8,6 +8,17 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_ERROR,
     LOGOUT_USER,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREATE_ACTIVITY_BEGIN,
+    CREATE_ACTIVITY_SUCCESS,
+    CREATE_ACTIVITY_ERROR,
+    UPDATE_USER_BEGIN,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR,
+    GET_ACTIVITIES_BEGIN,
+    GET_ACTIVITIES_SUCCESS,
+    SET_EDIT_ACTIVITY,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -29,7 +40,7 @@ const reducer = (state, action) => {
             alertText: "",
         };
     }
-    
+
     if (action.type === REGISTER_USER_BEGIN) {
         return { ...state, isLoading: true };
     }
@@ -89,9 +100,128 @@ const reducer = (state, action) => {
             ...initialState,
             user: null,
             token: null,
-
         };
     }
+
+    if (action.type === HANDLE_CHANGE) {
+        return {
+            ...state,
+            [action.payload.name]: action.payload.value,
+        };
+    }
+
+    if (action.type === CREATE_ACTIVITY_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+
+    if (action.type === CREATE_ACTIVITY_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "New Activity Created",
+        };
+    }
+
+    if (action.type === CREATE_ACTIVITY_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "danger",
+            alertText: action.payload.msg,
+        };
+    }
+
+    if (action.type === UPDATE_USER_BEGIN) {
+        return { ...state, isLoading: true };
+    }
+    if (action.type === UPDATE_USER_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            userName: action.payload.userName,
+            showAlert: true,
+            alertType: "success",
+            alertText: "User Profile Updated!",
+        };
+    }
+    if (action.type === UPDATE_USER_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "danger",
+            alertText: action.payload.msg,
+        };
+    }
+
+    if (action.type === CLEAR_VALUES) {
+        const initialState = {
+            isEditing: false,
+            editActivityId: "",
+            activityName: "",
+            activityType: "",
+            startDate: Date.now(),
+            endDate: Date.now(),
+            duration: "",
+            description: "",
+        };
+
+        return {
+            ...state,
+            ...initialState,
+        };
+    }
+
+    if (action.type === GET_ACTIVITIES_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+            showAlert: false,
+        };
+    }
+
+    if (action.type === GET_ACTIVITIES_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            activities: action.payload.activities,
+            totalActivities: action.payload.totalActivities,
+            numOfPage: action.payload.numOfPage,
+        };
+    }
+
+    if (action.type === SET_EDIT_ACTIVITY) {
+        const activity = state.activities.find(
+            (activity) => activity.id === action.payload.id
+        );
+        
+        const {
+            _id,
+            activityName,
+            activityType,
+            startDate,
+            endDate,
+            description,
+        } = activity;
+
+        return {
+            ...state,
+            isEditing: true,
+            editActivityId: _id,
+            activityName,
+            activityType,
+            startDate,
+            endDate,
+            description,
+        };
+    }
+
     throw new Error(`no such action : ${action.type}`);
 };
 

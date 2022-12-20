@@ -1,11 +1,10 @@
-import logo from './pictures/logo.png';
-import { BrowserRouter,Link, Routes, Route } from 'react-router-dom'
+import logo from "./pictures/logo.png";
+import { Link } from "react-router-dom";
 //Page
-import Home from '../../pages/Home'
-import Dashboard from '../../pages/Dashboard';
+
 const NavBar = () => {
     return (
-        <BrowserRouter>
+        <div>
             <div className="bg-white h-24 flex justify-between border-b-2 shadow-sm">
                 <div className="h-full ml-6 flex items-center">
                     <a href="/"><img src={logo} alt="logo" className="h-16" /></a>
@@ -14,16 +13,13 @@ const NavBar = () => {
                     <nav>
                         <Link to="/" className='uppercase  mr-2'>Home</Link>
                         <Link to="/dashboard" className='uppercase  mr-2'>Dashboard</Link>
+                        <Link to="/profile" className='uppercase  mr-2'>Profile</Link>
                     </nav>
                 </div>
             </div>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-        </BrowserRouter>
-
-    )
-}
+            
+        </div>
+    );
+};
 
 export default NavBar;

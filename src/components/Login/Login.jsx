@@ -5,22 +5,17 @@ import { useAppContext } from "../../context/appContext.js";
 import logo from "./pictures/logo.png";
 import Alert from "../Alert/Alert.jsx";
 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
     // States
     const [value, setValue] = useState({
         userName: "",
         password: "",
     });
-    const { isLoading, showAlert, displayAlert, loginUser } = useAppContext();
+    const navigate = useNavigate();
+    const { userName, isLoading, showAlert, displayAlert, loginUser } = useAppContext();
     const [error, setError] = useState(null);
-
-    // useEffect(() => {
-    //     const loggedInUser = localStorage.getItem("user");
-    //     if (loggedInUser) {
-    //         const foundUser = JSON.parse(loggedInUser);
-    //         setValue(foundUser);
-    //     }
-    // }, []);
 
     const handleChange = (e) => {
         setValue({
@@ -50,6 +45,14 @@ const Login = () => {
             password: "",
         });
     };
+
+    useEffect(() => {
+        if (userName) {
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 3000);
+        }
+    }, [userName, navigate]);
 
     return (
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
