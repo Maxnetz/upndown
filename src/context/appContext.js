@@ -23,6 +23,13 @@ import {
     GET_ACTIVITIES_BEGIN,
     GET_ACTIVITIES_SUCCESS,
     SET_EDIT_ACTIVITY,
+    DELETE_ACTIVITY_BEGIN,
+    DELETE_ACTIVITY_ERROR,
+    EDIT_ACTIVITY_BEGIN,
+    EDIT_ACTIVITY_SUCCESS,
+    EDIT_ACTIVITY_ERROR,
+    SHOW_STATS_BEGIN,
+    SHOW_STATS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -31,9 +38,11 @@ const userName = localStorage.getItem("userName");
 const initialState = {
     userLoading: true,
     isLoading: false,
+    isStatsSuccess: false,
     showAlert: false,
     alertText: "",
     alertType: "",
+    showNavItem: false,
     user: null,
     userName: userName ? JSON.parse(userName) : null,
     token: token,
@@ -57,6 +66,7 @@ const initialState = {
     totalActivities: 0,
     numOfPage: 1,
     page: 1,
+    stats: {},
 };
 
 const AppContext = React.createContext();
@@ -83,7 +93,7 @@ const AppProvider = ({ children }) => {
             if (error.response.status === 401) {
                 console.log("AUTH ERROR");
             }
-            return Promise.rereject(error);
+            return Promise.reject(error);
         }
     );
 
@@ -190,7 +200,7 @@ const AppProvider = ({ children }) => {
 
     // 101 - Add logout
     const logoutUser = async () => {
-        await authFetch.get("/auth/logout");
+        // await authFetch.get("/auth/logout");
         dispatch({ type: LOGOUT_USER });
         removeUserFromLocalStorage();
     };
@@ -260,13 +270,79 @@ const AppProvider = ({ children }) => {
         dispatch({ type: SET_EDIT_ACTIVITY, payload: { id } });
     };
 
-    const editActivity = () => {
-        console.log('edit activity');
-    }
-    
-    const deleteActivity = (id) => {
-        console.log(`delete: ${id}`)
-    }
+    const editActivity = async () => {
+        dispatch({ type: EDIT_ACTIVITY_BEGIN });
+        // console.log('edit activity');
+
+        try {
+            const {
+                activityName,
+                activityType,
+                startDate,
+                endDate,
+                duration,
+                description,
+            } = state;
+
+            await authFetch.patch(`/activities/${state.editActivityId}`, {
+                activityName,
+                activityType,
+                startDate,
+                endDate,
+                duration,
+                description,
+            });
+
+            dispatch({ type: EDIT_ACTIVITY_SUCCESS });
+            dispatch({ type: CLEAR_VALUES });
+        } catch (error) {
+            if (error.response.status === 401) return;
+            dispatch({
+                type: EDIT_ACTIVITY_ERROR,
+                payload: { msg: error.response.data.msg },
+            });
+        }
+        clearAlert();
+    };
+
+    const deleteActivity = async (activityId) => {
+        dispatch({ type: DELETE_ACTIVITY_BEGIN });
+        try {
+            await authFetch.delete(`/activities/${activityId}`);
+            getActivities();
+        } catch (error) {
+            logoutUser();
+        }
+        // console.log(`delete: ${activityId}`);
+    };
+
+    const showStats = async () => {
+        dispatch({ type: SHOW_STATS_BEGIN });
+        try {
+            const { data } = await authFetch("/activities/stats");
+            const { defaultStats } = data;
+            console.log(`defaultstats: ${defaultStats}`);
+            dispatch({
+                type: SHOW_STATS_SUCCESS,
+                payload: {
+                    stats: defaultStats.totalActivities,
+                },
+            });
+        } catch (error) {
+            console.log(error.response);
+            // logoutUser();
+        }
+        clearAlert();
+    };
+
+    useEffect(() => {
+        let tid = setTimeout(() => {
+            showStats();
+        }, 100);
+        return () => {
+            clearTimeout(tid);
+        };
+    }, []);
 
     return (
         <AppContext.Provider
@@ -284,6 +360,7 @@ const AppProvider = ({ children }) => {
                 setEditActivity,
                 editActivity,
                 deleteActivity,
+                showStats,
             }}
         >
             {children}

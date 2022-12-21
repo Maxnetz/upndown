@@ -1,52 +1,66 @@
 import runningPic from "./pictures/runningPic.png";
+import walkingPic from "./pictures/walkingPic.png";
+import hikingPic from "./pictures/hikingPic.png";
+import swimmingPic from "./pictures/swimmingPic.png";
+import riddingPic from "./pictures/riddingPic.png";
 import { useAppContext } from "../../context/appContext";
+import EditActivityForm from "../Form/EditActivityForm.jsx";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const ActivityCard = () => {
-    const {
-        activityName,
-        startDate,
-        duration,
-        description,
-        activities,
-        totalActivities,
-        numOfPage,
-    } = useAppContext();
-    
-    const data = [
-        { id: 1, activity: "Running" },
-        { id: 2, activity: "Swimming" },
-        { id: 3, activity: "Hiking" },
-        { id: 4, activity: "Dancing" },
-        { id: 5, activity: "Biking" },
-        { id: 6, activity: "Biking" },
-    ];
+    const { isEditing, activities, deleteActivity, setEditActivity } =
+        useAppContext();
+
+    const CardImg = {
+        Riding: runningPic,
+        Walking: walkingPic,
+        Running: riddingPic,
+        Swimming: swimmingPic,
+        Hiking: hikingPic,
+    };
+
+    const [editAct, setEditAct] = useState("");
 
     return (
         <div className="flex overflow-auto pt-24">
-            {activities.map((activity) => (
+            {activities.map((activity) => {
+                return(
                 <div
                     className="card min-w-[14rem] bg-base-100 shadow-xl m-8"
                     key={activity._id}
                 >
                     <figure>
                         <img
-                            src={runningPic}
-                            alt="Shoes"
-                            className="rounded-xl"
+                            src={CardImg[activity.activityType]}
+                            alt="Exercise-activity"
+                            className="rounded-xl w-80"
                         />
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">{activity.activityName}</h2>
                         <p>Type: {activity.activityType}</p>
                         <p>Duration: {activity.duration}</p>
-                
+
                         <div className="card-actions">
-                            <button className="btn btn-primary">Edit</button>
-                            <button className="btn btn-primary">Delete</button>
+                            <Link
+                                to="/editActivity"
+                                className="text-center focus:outline-none text-black bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 text-black dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 "
+                                onClick={() => setEditActivity(activity._id)}
+                            >
+                                Edit
+                            </Link>
+                            <button
+                                className="text-center focus:outline-none text-black bg-yellow-300 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 dark:bg-yellow-500 dark:hover:bg-yellow-800 dark:focus:ring-yellow-400"
+                                onClick={() => deleteActivity(activity._id)}
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
-            ))}
+            )}
+        )}
         </div>
     );
 };

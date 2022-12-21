@@ -14,7 +14,8 @@ const Login = () => {
         password: "",
     });
     const navigate = useNavigate();
-    const { userName, isLoading, showAlert, displayAlert, loginUser } = useAppContext();
+    const { userName, isLoading, showAlert, displayAlert, loginUser } =
+        useAppContext();
     const [error, setError] = useState(null);
 
     const handleChange = (e) => {
@@ -51,67 +52,71 @@ const Login = () => {
             setTimeout(() => {
                 navigate("/dashboard");
             }, 3000);
+            return window.location.assign("/dashboard");
         }
     }, [userName, navigate]);
 
     return (
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
-                    <div className="w-100">
-                        <img
-                            className="mx-auto h-12 w-auto"
-                            src={logo}
-                            alt="Workflow"
-                        />
-                    </div>
-
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign In
-                    </h2>
-                    {showAlert && <Alert />}
-                    <div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 text-start py-4">
-                                Username
-                            </label>
-                            <div>
-                                <input
-                                    type="text"
-                                    id="userName"
-                                    name="userName"
-                                    placeholder="Username"
-                                    value={value.userName}
-                                    onChange={handleChange}
-                                    className="w-full border bg-white border-gray-300 px-3 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 py-4"
-                                />
-                            </div>
+        <div className=" pt-24 bg-purple-200 h-screen">
+            <div className=" flex justify-center ">
+                <div className="bg-white rounded-[20px] w-4/12 px-8  md:w-7/12 md:px-16 sm:w-5/6 xs:px-2 xs:w-5/6">
+                    <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
+                        <div className="w-100">
+                            <img
+                                className="mx-auto h-12 w-auto"
+                                src={logo}
+                                alt="Workflow"
+                            />
                         </div>
 
+                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                            SIGN IN
+                        </h2>
+                        {showAlert && <Alert />}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 text-start py-4">
-                                Password
-                            </label>
                             <div>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    value={value.password}
-                                    onChange={handleChange}
-                                    className="w-full border bg-white border-gray-300 px-3 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 py-4"
-                                />
+                                <label className="block text-sm font-medium text-gray-700 text-start py-4">
+                                    Username
+                                </label>
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="userName"
+                                        name="userName"
+                                        placeholder="Username"
+                                        value={value.userName}
+                                        onChange={handleChange}
+                                        className="w-full border bg-white border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-50"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 text-start py-4">
+                                    Password
+                                </label>
+                                <div>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Password"
+                                        value={value.password}
+                                        onChange={handleChange}
+                                        className="w-full border bg-white border-gray-300 px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"/>
+                                </div>
+                            </div>
+                            {error && (
+                                <p className="py-4 text-red-600 ">{error}</p>
+                            )}
+                            <div className="py-4 flex justify-center">
+                                <button className="w-full focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400">
+                                    SIGN IN
+                                </button>
                             </div>
                         </div>
-                        {error && <p className="py-4 text-red-600 ">{error}</p>}
-                        <div className="py-4">
-                            <button className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400">
-                                Sign in
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     );

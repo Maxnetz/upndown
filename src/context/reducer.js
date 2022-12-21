@@ -19,6 +19,13 @@ import {
     GET_ACTIVITIES_BEGIN,
     GET_ACTIVITIES_SUCCESS,
     SET_EDIT_ACTIVITY,
+    DELETE_ACTIVITY_BEGIN,
+    DELETE_ACTIVITY_ERROR,
+    EDIT_ACTIVITY_BEGIN,
+    EDIT_ACTIVITY_SUCCESS,
+    EDIT_ACTIVITY_ERROR,
+    SHOW_STATS_BEGIN,
+    SHOW_STATS_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -54,6 +61,7 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: "success",
             alertText: "User Created! Redirecting...",
+            showNavItem: false,
         };
     }
 
@@ -198,9 +206,9 @@ const reducer = (state, action) => {
 
     if (action.type === SET_EDIT_ACTIVITY) {
         const activity = state.activities.find(
-            (activity) => activity.id === action.payload.id
+            (activity) => activity._id === action.payload.id
         );
-        
+
         const {
             _id,
             activityName,
@@ -221,6 +229,65 @@ const reducer = (state, action) => {
             description,
         };
     }
+    
+    if (action.type === DELETE_ACTIVITY_BEGIN) {
+        return { ...state, isLoading: true };
+    }
+
+    if (action.type === DELETE_ACTIVITY_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "danger",
+            alertText: action.payload.msg,
+        };
+    }
+
+    if (action.type === EDIT_ACTIVITY_BEGIN) {
+        return {
+            ...state,
+            isLoading: false,
+        };
+    }
+    if (action.type === EDIT_ACTIVITY_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Activity Updated",
+        };
+    }
+
+    if (action.type === EDIT_ACTIVITY_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "danger",
+            alertText: action.payload.msg,
+        };
+    }
+
+    if (action.type === SHOW_STATS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+            showAlert: false,
+        }
+    }
+
+    if (action.type === SHOW_STATS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            isStatsSuccess: true,
+            stats: action.payload.stats,
+        }
+    }
+
+
 
     throw new Error(`no such action : ${action.type}`);
 };

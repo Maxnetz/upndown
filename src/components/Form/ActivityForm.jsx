@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import logo from "./pictures/logo.png";
 import { useAppContext } from "../../context/appContext";
-
+import { useNavigate } from "react-router-dom";
 import Alert from "../Alert/Alert";
 
 const ActivityForm = () => {
     const {
+        token,
         isLoading,
         isEditing,
         showAlert,
@@ -23,6 +24,7 @@ const ActivityForm = () => {
         editActivity,
     } = useAppContext();
 
+    const navigate = useNavigate()
     const [error, setError] = useState(null);
 
     const handleActivityInput = (e) => {
@@ -60,33 +62,39 @@ const ActivityForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if (
-        //     !activityName ||
-        //     !activityType ||
-        //     !startDate ||
-        //     !endDate ||
-        //     !duration ||
-        //     !description ||
-        //     activityType === ""
-        // ) {
-        //     setError("All fields are required");
-        //     displayAlert();
-        //     return;
-        // }
+        if (
+            !activityName ||
+            !activityType ||
+            !startDate ||
+            !endDate ||
+            !duration ||
+            !description ||
+            activityType === ""
+        ) {
+            setError("All fields are required");
+            displayAlert();
+            return;
+        }
 
         if (isEditing) {
             editActivity();
             return;
         }
         createActivity();
+
+        setError(null);
     };
+    if (!token) {
+        return navigate("/");
+    }
+
 
     return (
-        <div className="bg-white">
+        <div className="bg-purple-200">
             <label
                 htmlFor="my-modal"
-                className="btn focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400"
-            ></label>
+                className="btn focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-full text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400"
+            >Add</label>
 
             <input type="checkbox" id="my-modal" className="modal-toggle" />
             <div className="modal">
