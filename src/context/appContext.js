@@ -123,7 +123,7 @@ const AppProvider = ({ children }) => {
         dispatch({ type: REGISTER_USER_BEGIN });
         try {
             const { data } = await axios.post(
-                "/api/v1/auth/register",
+                "https://upndown-backend.vercel.app/api/v1/auth/register",
                 currentUser
             );
             const { user, token } = data;
@@ -148,7 +148,7 @@ const AppProvider = ({ children }) => {
         dispatch({ type: LOGIN_USER_BEGIN });
         try {
             const { data } = await axios.post(
-                "/api/v1/auth/login",
+                "https://upndown-backend.vercel.app/api/v1/auth/login",
                 currentUser
             );
             const { user, token } = data;
@@ -172,7 +172,7 @@ const AppProvider = ({ children }) => {
         dispatch({ type: UPDATE_USER_BEGIN });
         try {
             const { data } = await axios.patch(
-                "/api/v1/auth/updateUser",
+                "https://upndown-backend.vercel.app/api/v1/auth/updateUser",
                 currentUser,
                 {
                     headers: {
