@@ -18,11 +18,12 @@ const Dashboard = () => {
         <div>
             <div className="h-screen bg-purple-200">
                 <ActivityCard />
-                <div className="flex justify-around">
+                <div className="flex justify-around bg-purple-200">
                     <StatContainer />
                 </div>
+                
                 <div className="flex justify-end mx-4">
-                <ActivityForm />
+                    <ActivityForm />
                 </div>
             </div>
         </div>

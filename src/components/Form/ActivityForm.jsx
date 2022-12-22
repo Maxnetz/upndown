@@ -24,8 +24,9 @@ const ActivityForm = () => {
         editActivity,
     } = useAppContext();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [move, setMove] = useState(null);
 
     const handleActivityInput = (e) => {
         const name = e.target.name;
@@ -78,23 +79,37 @@ const ActivityForm = () => {
 
         if (isEditing) {
             editActivity();
+            setMove(true);
             return;
         }
         createActivity();
 
         setError(null);
     };
+
+    // Relocate after adding card
+    useEffect(() => {
+        if (move) {
+            setTimeout(() => {
+                navigate("/");
+                window.location.reload("/");
+            }, 3000);
+        }
+    }, [move, navigate]);
+
+    // Check User's Token for permission
     if (!token) {
         return navigate("/");
     }
 
-
     return (
-        <div className="bg-purple-200">
+        <div className="bg-transparent fixed z-10 bottom-8 right-4">
             <label
                 htmlFor="my-modal"
                 className="btn focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-full text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400"
-            >Add</label>
+            >
+                Add
+            </label>
 
             <input type="checkbox" id="my-modal" className="modal-toggle" />
             <div className="modal">
@@ -114,7 +129,9 @@ const ActivityForm = () => {
                                 </div>
 
                                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                                    {isEditing ? "Edit Activity Form": "Add Activity Form"}
+                                    {isEditing
+                                        ? "Edit Activity Form"
+                                        : "Add Activity Form"}
                                 </h2>
 
                                 {showAlert && <Alert />}
@@ -233,7 +250,9 @@ const ActivityForm = () => {
                                         disabled={isLoading}
                                         className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400"
                                     >
-                                        {isEditing ? "Edit Activity": "Add Activity"}
+                                        {isEditing
+                                            ? "Edit Activity"
+                                            : "Add Activity"}
                                     </button>
                                 </div>
                             </form>

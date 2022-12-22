@@ -29,6 +29,10 @@ module.exports = {
       '2xl': {'min': '1536px'},
       // => @media (min-width: 1536px) { ... }
     },
+
+    fontFamily: {
+      Poppins: ["Poppins", "sans-serif"],
+     },
   },
   plugins: [require("daisyui")],
 }

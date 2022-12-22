@@ -60,9 +60,9 @@ const Profile = () => {
     }
 
     return (
-        <div className="h-screen bg-purple-200 pt-24">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+        <div className="pt-32 bg-purple-200 h-screen">
+            <div className="flex justify-center">
+                <div className="bg-white rounded-[20px] w-3/12 px-8  md:w-7/12 md:px-8 sm:w-4/6 xs:px-4 xs:w-5/6">
                     <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
                         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                             Hello, {userName}!
@@ -103,10 +103,11 @@ const Profile = () => {
                         </div>
 
                         {error && <p className="py-4 text-red-600 ">{error}</p>}
-
-                        <button className="focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 ">
+                       <div className="py-4">
+                        <button className="px-4 w-full focus:outline-none text-white bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 ">
                             Submit
                         </button>
+                     </div>
                     </form>
                 </div>
             </div>

@@ -81,6 +81,7 @@ const EditActivityForm = () => {
         setMove(true);
     };
 
+    // Relocate after adding card
     useEffect(() => {
         if (move) {
           setTimeout(() => {
@@ -91,6 +92,7 @@ const EditActivityForm = () => {
         }
       }, [move, navigate]);
 
+       // Check User's Token for permission
       if (!token) {
         return navigate("/");
     }
@@ -101,7 +103,7 @@ const EditActivityForm = () => {
           
   
                     <div className=" mt-24 sm:mx-auto sm:w-full sm:max-w-md flex justify-center ">
-                        <div className="bg-white rounded-lg w-4/12 px-8  md:w-5/12 md:px-16 sm:w-5/6 xs:px-2 xs:w-5/6">
+                        <div className="bg-white rounded-lg w-4/12 px-8  md:w-7/12 md:px-16 xs:px-2 xs:w-5/6">
                             <form
                                 onSubmit={handleSubmit}
                                 className="mb-0 space-y-6"

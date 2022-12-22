@@ -57,15 +57,15 @@ const Login = () => {
     }, [userName, navigate]);
 
     return (
-        <div className=" pt-24 bg-purple-200 h-screen">
+        <div className=" pt-32 bg-purple-200 h-screen">
             <div className=" flex justify-center ">
-                <div className="bg-white rounded-[20px] w-4/12 px-8  md:w-7/12 md:px-16 sm:w-5/6 xs:px-2 xs:w-5/6">
+                <div className="bg-white rounded-[20px] w-3/12 px-8  md:w-7/12 md:px-8 sm:w-4/6 xs:px-4 xs:w-5/6">
                     <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
                         <div className="w-100">
                             <img
                                 className="mx-auto h-12 w-auto"
                                 src={logo}
-                                alt="Workflow"
+                                alt="logo"
                             />
                         </div>
 

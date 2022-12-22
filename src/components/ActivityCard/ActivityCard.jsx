@@ -21,13 +21,14 @@ const ActivityCard = () => {
     };
 
     const [editAct, setEditAct] = useState("");
-
+    
     return (
         <div className="flex overflow-auto pt-24">
-            {activities.map((activity) => {
+            {activities.slice(0).reverse().map((activity) => {
+               
                 return(
                 <div
-                    className="card min-w-[14rem] bg-base-100 shadow-xl m-8"
+                    className="card min-w-[16rem] bg-base-100 shadow-xl m-8"
                     key={activity._id}
                 >
                     <figure>
@@ -45,13 +46,13 @@ const ActivityCard = () => {
                         <div className="card-actions">
                             <Link
                                 to="/editActivity"
-                                className="text-center focus:outline-none text-black bg-purple-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 text-black dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 "
+                                className="text-center focus:outline-none text-black bg-yellow-300 hover:bg-yellow-400 focus:ring-4 focus:ring-indigo-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 text-black dark:bg-indigo-600 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 "
                                 onClick={() => setEditActivity(activity._id)}
                             >
                                 Edit
                             </Link>
                             <button
-                                className="text-center focus:outline-none text-black bg-yellow-300 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 dark:bg-yellow-500 dark:hover:bg-yellow-800 dark:focus:ring-yellow-400"
+                                className="text-center focus:outline-none text-black bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-2.5 mb-2 dark:bg-yellow-500 dark:hover:bg-yellow-800 dark:focus:ring-yellow-400"
                                 onClick={() => deleteActivity(activity._id)}
                             >
                                 Delete
